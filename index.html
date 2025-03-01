@@ -1,0 +1,131 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data Zakat</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css"
+    />
+    <style>
+      thead {
+        background-color: #2d572c;
+        color: white;
+        text-align: center;
+      }
+
+      .warnaijo {
+        background-color: #2d572c;
+      }
+
+      th {
+        vertical-align: middle !important;
+      }
+    </style>
+  </head>
+  <body class="bg-light">
+    <div class="container mt-5">
+      <div class="card shadow-lg p-4">
+        <h3 class="text-center text-white rounded py-4 mb-4 warnaijo">
+          Data Zakat
+        </h3>
+        <table
+          id="example"
+          class="table table-bordered table-hover table-striped"
+          style="width: 100%"
+        >
+          <thead class="table-success">
+            <tr>
+              <th rowspan="2">NO</th>
+              <th rowspan="2">TANGGAL</th>
+              <th rowspan="2">NAMA MUZZAKI</th>
+              <th rowspan="2">RT</th>
+              <th rowspan="2">JMLH JIWA</th>
+              <th colspan="2">ZAKAT</th>
+              <th rowspan="2">Infaq & Shodaqoh</th>
+              <th rowspan="2">Santunan Yatim</th>
+              <th rowspan="2">Keterangan</th>
+            </tr>
+            <tr>
+              <th>Uang</th>
+              <th>Beras (Ltr)</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $("#example").DataTable({
+          ajax: "https://script.google.com/macros/s/AKfycbx0Uib2-UmlqKghmz3PZI7XOx5VeZC_fjVq3FFFproDTOmLX4X5i0Zacjn241Q5WNvD_Q/exec",
+          columns: [
+            { title: "NO", data: "NO" },
+            {
+              title: "TANGGAL",
+              data: "TANGGAL",
+              render: function (data) {
+                if (!data) return "";
+                let date = new Date(data);
+                return date.toLocaleDateString("id-ID", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                });
+              },
+            },
+            { title: "NAMA MUZZAKI", data: "NAMA  MUZZAKI" },
+            { title: "RT", data: "RT" },
+            { title: "JMLH JIWA", data: "JML JIWA" },
+            {
+              title: "Uang",
+              data: "ZAKAT",
+              render: function (data) {
+                return data
+                  ? `Rp ${parseInt(data).toLocaleString("id-ID")}`
+                  : "";
+              },
+            },
+            {
+              title: "Beras",
+              data: "",
+              render: function (data) {
+                return data ? `${parseFloat(data).toFixed(1)} Ltr` : "-";
+              },
+            },
+            {
+              title: "Infaq & Shodaqoh",
+              data: "Infaq & Shodaqoh",
+              render: function (data) {
+                return data
+                  ? `Rp ${parseInt(data).toLocaleString("id-ID")}`
+                  : "";
+              },
+            },
+            {
+              title: "Santunan Yatim",
+              data: "Santunan Yatim ",
+              render: function (data) {
+                return data
+                  ? `Rp ${parseInt(data).toLocaleString("id-ID")}`
+                  : "";
+              },
+            },
+            { title: "Keterangan", data: "Keterangan" },
+          ],
+          responsive: true,
+          paging: true,
+          searching: true,
+          lengthChange: true,
+          pageLength: 10,
+        });
+      });
+    </script>
+  </body>
+</html>
